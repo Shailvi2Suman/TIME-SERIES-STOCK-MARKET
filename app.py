@@ -54,9 +54,13 @@ elif section == "LSTM":
 st.subheader("🧠 LSTM Deep Learning Forecast")
 display_script("lstm_model.py")
 
+elif section == "Data Cleaning":
+display_script("data_cleaning.py")
+
 elif section == "Dashboards (HTML)":
 st.subheader("🌐 Interactive Dashboards")
 dashboard_file = st.selectbox("Choose a dashboard file", [
+"eda_dashboard.html",
 "simple_dashboard.html",
 "sarima_dashboard.html",
 "lstm_dashboard.html"
