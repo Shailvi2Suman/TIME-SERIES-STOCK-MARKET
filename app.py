@@ -66,3 +66,8 @@ dashboard_file = st.selectbox("Choose a dashboard file", [
 "lstm_dashboard.html"
 ])
 display_dashboard(dashboard_file)
+
+python -m venv .venv
+.venv\Scripts\activate           # (on Windows)
+pip install -r requirements.txt
+streamlit run app.py
