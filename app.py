@@ -1,73 +1,71 @@
 import streamlit as st
-import pandas as pd
 import os
 
-Set up the app
-st.set_page_config(page_title="📈 Stock Forecasting Dashboard", layout="wide")
-st.title("📊 Stock Forecasting Dashboard – ARIMA | SARIMA | LSTM")
+# 🎯 Page Config
+st.set_page_config(
+    page_title="📈 Stock Market Forecasting",
+    layout="wide"
+)
 
-Sidebar navigation
-section = st.sidebar.radio("📁 Select Section", [
-"EDA",
-"ARIMA",
-"SARIMA",
-"LSTM",
-"Dashboards (HTML)"
+# 📌 Title
+st.title("📊 Stock Forecasting Dashboard – EDA | ARIMA | SARIMA | LSTM")
+
+# 📁 Sidebar Navigation
+section = st.sidebar.radio("Navigate to:", [
+    "EDA (Python Script)",
+    "Data Cleaning Notebook",
+    "ARIMA",
+    "SARIMA",
+    "LSTM",
+    "Dashboards (HTML)"
 ])
 
-Display Python script content
-def display_script(file_path):
-try:
-with open(file_path, "r", encoding="utf-8") as f:
-code = f.read()
-st.code(code, language="python")
-except FileNotFoundError:
-st.error(f"❌ File not found: {file_path}")
-except Exception as e:
-st.error(f"⚠ Error loading {file_path}: {e}")
+# 🔍 Show code from .py file
+def show_script_code(file_path):
+    if os.path.exists(file_path):
+        with open(file_path, "r", encoding="utf-8") as file:
+            code = file.read()
+        st.code(code, language='python')
+    else:
+        st.error(f"❌ File not found: {file_path}")
 
-Display HTML dashboard
-def display_dashboard(file_path):
-try:
-with open(file_path, "r", encoding="utf-8") as f:
-html = f.read()
-st.components.v1.html(html, height=800, scrolling=True)
-except FileNotFoundError:
-st.error(f"❌ Dashboard file not found: {file_path}")
-except Exception as e:
-st.error(f"⚠ Error displaying dashboard: {e}")
+# 🌐 Display exported HTML dashboard
+def show_html_dashboard(file_path):
+    if os.path.exists(file_path):
+        with open(file_path, "r", encoding='utf-8') as file:
+            html = file.read()
+        st.components.v1.html(html, height=800, scrolling=True)
+    else:
+        st.error(f"❌ Dashboard not found: {file_path}")
 
-Section logic
-if section == "EDA":
-st.subheader("📌 Exploratory Data Analysis")
-display_script("eda.py")
+# 📂 Section Logic
+if section == "EDA (Python Script)":
+    st.subheader("📌 Exploratory Data Analysis")
+    show_script_code("eda.py")
+
+elif section == "Data Cleaning Notebook":
+    st.subheader("🧹 Data Cleaning Code")
+    show_script_code("data_cleaning.py")  # If this is in .py format, else convert first
 
 elif section == "ARIMA":
-st.subheader("🔮 ARIMA Forecast Model")
-display_script("arima.py")
+    st.subheader("🔮 ARIMA Forecasting Model")
+    show_script_code("arima.py")
 
 elif section == "SARIMA":
-st.subheader("📆 SARIMA Forecast Model")
-display_script("sarima.py")
+    st.subheader("📆 SARIMA Forecasting Model")
+    show_script_code("sarima.py")
 
 elif section == "LSTM":
-st.subheader("🧠 LSTM Deep Learning Forecast")
-display_script("lstm_model.py")
-
-elif section == "Data Cleaning":
-display_script("data_cleaning.py")
+    st.subheader("🧠 LSTM Deep Learning Forecast")
+    show_script_code("lstm_model.py")
 
 elif section == "Dashboards (HTML)":
-st.subheader("🌐 Interactive Dashboards")
-dashboard_file = st.selectbox("Choose a dashboard file", [
-"eda_dashboard.html",
-"simple_dashboard.html",
-"sarima_dashboard.html",
-"lstm_dashboard.html"
-])
-display_dashboard(dashboard_file)
+    st.subheader("🌐 Interactive Dashboards")
+    dashboard_choice = st.selectbox("Select dashboard:", [
+        "eda_dashboard.html",
+        "simple_dashboard.html",
+        "sarima_dashboard.html",
+        "lstm_dashboard.html"
+    ])
+    show_html_dashboard(dashboard_choice)
 
-python -m venv .venv
-.venv\Scripts\activate           # (on Windows)
-pip install -r requirements.txt
-streamlit run app.py
