@@ -7,15 +7,4 @@ scikit-learn
 statsmodels
 tensorflow
 plotly
-jupyter
-ipykernel
-streamlit
-pandas
-numpy
-matplotlib
-seaborn
-scikit-learn
-statsmodels
-tensorflow
-plotly
-jupyter
+nbconvert
